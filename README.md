@@ -20,6 +20,7 @@ Futher more the HMI Display is not a Realtime application. So here it could make
 Implemented are 3 different Tasks. The questions for the priority can be solved with the following considerations:
 1. Receiver has higher Priority than Sender: Receiver reads outdated data. A fix could be a mailbox to buffer the data.
 2. Sender and Receiver same Prio or Sender has higher Prio: Race Condition. (Overwrite of Signals) A fix could be an Eventqueue.
+   
 **Mailbox**
 The mailbox works as a ringbuffer which holds variable datatypes, typedef structs included. With this it is possible to have no race conditions.
 Attention has to be payed to the fillLevel and the PUT and GET functions of the Mailbox. Here Mutexes are used to make the Buffer threadsafe.
