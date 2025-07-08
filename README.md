@@ -20,7 +20,7 @@ Control Task.
 
 **Realtime Tasks**
 
-Futher more the HMI Display is not a Realtime application. So here it could make sense to put higher priority on the Input Task and the Control Task(Statemachine).
+Futhermore the HMI Display is not a Realtime application. So here it could make sense to put higher priority on the Input Task and the Control Task(Statemachine).
 
 **Priorities**
 
