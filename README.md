@@ -7,15 +7,19 @@ This implementation has the benefits in ...
 
 ## RTE Design
 ![rte_design](https://github.com/user-attachments/assets/b52d2bf2-cfad-4071-b22a-b264809ac010)
+
 ### Design Considerations ###
 In Order to prevent Race Conditions and Data Loss (regarding the Signals), the safest method is to implement the whole
 Game/System into a single Task. With this approach there are no Data Races (e.g. Statemachine reads while Joystick is writing).
 Since Sender and Receiver Runnables are executed sequentially, the implementation can be safe, when designed carefully.
+
 **Event Extension**
 Since it could be possible to add some events like a information via UART, which Game to play, the input Task could be seperate from the 
 Control Task. 
+
 **Realtime Tasks**
 Futher more the HMI Display is not a Realtime application. So here it could make sense to put higher priority on the Input Task and the Control Task(Statemachine).
+
 **Priorities**
 Implemented are 3 different Tasks. The questions for the priority can be solved with the following considerations:
 1. Receiver has higher Priority than Sender: Receiver reads outdated data. A fix could be a mailbox to buffer the data.
