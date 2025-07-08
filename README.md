@@ -8,6 +8,16 @@ This implementation has the benefits in ...
 ## RTE Design
 ![rte_design](https://github.com/user-attachments/assets/b52d2bf2-cfad-4071-b22a-b264809ac010)
 
+### General ###
+The input task, executes the runnables joystick and button. Those use the joystick driver and button driver respectively.
+Their task is to transform the driver data into an event for the statemachine. 
+
+The Statemachine is implemented inside the control task. Its task is to Configure the global Object OO_PONG_MAIN.
+
+The HMI task is triggered periodically every 250 ms. Its task is to read out the OO_PONG_MAIN and writes the data to the display.
+
+All Runnables are implemented in one software component.
+
 ### Design Considerations ###
 In Order to prevent Race Conditions and Data Loss (regarding the Signals), the safest method is to implement the whole
 Game/System into a single Task. With this approach there are no Data Races (e.g. Statemachine reads while Joystick is writing).
@@ -35,7 +45,11 @@ Attention has to be payed to the fillLevel and the PUT and GET functions of the 
 
 ## Statemachine
 ![pong_statemachine](https://github.com/user-attachments/assets/be111dd6-a01f-4e09-9e00-ab2f5efd9f30)
+
+The Task of the Statemachine is to receive input Events and considering the current state, configure the objects, defined in pong_game.h.
 ## UML
 ![pong_uml](https://github.com/user-attachments/assets/2e3ad71d-5371-46c0-bd21-b503443f52a4)
+
+This UML describes the Datastructure of the Pong Objects in pong_games.h.
 
 
