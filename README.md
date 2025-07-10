@@ -32,7 +32,7 @@ Control task.
 
 Futhermore the HMI display is not a Realtime application. So here it could make sense to put higher priority on the Input Task and the Control task(Statemachine).
 
-**Priorities**
+**Priorities** (Design not yet finished)
 
 Implemented are 3 different Tasks. The questions for the priority can be solved with the following considerations:
 1. **Receiver has higher Priority than Sender:** Receiver reads outdated data. A fix could be a mailbox to buffer the data.
