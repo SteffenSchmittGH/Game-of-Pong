@@ -35,6 +35,7 @@ Futhermore the HMI display is not a Realtime application. So here it could make 
 **Priorities** (Design not yet finished)
 
 Implemented are 3 different Tasks. The questions for the priority can be solved with the following considerations:
+
 **Cyclic Control Task**
 
 1. **Receiver has higher Priority than Sender:** Receiver reads outdated data. A fix could be a mailbox to buffer the data.
