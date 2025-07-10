@@ -48,8 +48,13 @@ Implemented are 3 different Tasks. The questions for the priority can be solved 
    
 3. **Event Driven Control Task**
 
-   2.1. **Receiver has higher Priority than Sender:** This Configuration works in this szenario. Even if the input runnables would be not both in one task, there would be no races.
-   2.2 **Sender and Receiver same Prio or Sender has higher Prio:** Button Signal would overwrite joystick signal always.
+   2.1. **Receiver has higher Priority than Sender:**
+
+   This Configuration works in this szenario. Even if the input runnables would be not both in one task, there would be no races.
+   
+   2.2 **Sender and Receiver same Prio or Sender has higher Prio:**
+
+   Button Signal would overwrite joystick signal always.
 
 #### Mailbox
 
