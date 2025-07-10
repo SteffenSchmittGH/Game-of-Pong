@@ -60,7 +60,7 @@ Implemented are 3 different Tasks. The questions for the priority can be solved 
 
 The mailbox works as a ringbuffer which holds variable datatypes, typedef structs included. With this it is possible to have no race conditions.
 Attention has to be payed to the fillLevel and the PUT and GET functions of the Mailbox. Here Mutexes are used to make the Buffer threadsafe.
-The benefits of the Mailbox is the flexibility for futher extensions. Priority decisions are not fixed and will impact the correct behaviour of the system.
+The benefits of the Mailbox is the flexibility for futher extensions. Priority decisions are not fixed and will have no impact the correct behaviour of the system.
 
 **Conclusion**
 
