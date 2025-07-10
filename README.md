@@ -1,4 +1,4 @@
-# Game-of-Pong
+# Game-of-Pong (in Progress)
 Embedded OS and RTE based implementation of the Game of Pong on an Embedded Target (Psoc).
 This implementation has the benefits in ...
 1. **Decoupling**: Application logic and Driver logic is seperated. Statemachine doesnt directly access display Hardware.
@@ -25,18 +25,18 @@ Since Sender and Receiver Runnables are executed sequentially, the implementatio
 
 **Event Extension**
 
-Since it could be possible to add some events like a information via UART, which Game to play, the input Task could be seperate from the 
-Control Task. 
+Since it could be possible to add some events like a information via UART, which game to play, the input task could be seperate from the 
+Control task. 
 
 **Realtime Tasks**
 
-Futhermore the HMI Display is not a Realtime application. So here it could make sense to put higher priority on the Input Task and the Control Task(Statemachine).
+Futhermore the HMI display is not a Realtime application. So here it could make sense to put higher priority on the Input Task and the Control task(Statemachine).
 
 **Priorities**
 
 Implemented are 3 different Tasks. The questions for the priority can be solved with the following considerations:
-1. Receiver has higher Priority than Sender: Receiver reads outdated data. A fix could be a mailbox to buffer the data.
-2. Sender and Receiver same Prio or Sender has higher Prio: Race Condition. (Overwrite of Signals) A fix could be an Eventqueue.
+1. **Receiver has higher Priority than Sender:** Receiver reads outdated data. A fix could be a mailbox to buffer the data.
+2. **Sender and Receiver same Prio or Sender has higher Prio:** Race Condition. (Overwrite of Signals) A fix could be an Eventqueue.
    
 **Mailbox**
 
