@@ -38,10 +38,15 @@ Implemented are 3 different Tasks. The questions for the priority can be solved 
 
 1. **Cyclic Control Task**
 
-   1.1 **Receiver has higher Priority than Sender:** Receiver reads outdated data. A fix could be a mailbox to buffer the data.
-   1.2 **Sender and Receiver same Prio or Sender has higher Prio:** Race Condition. (Overwrite of Signals) A fix could be an Eventqueue.
+   1.1 **Receiver has higher Priority than Sender:**
+
+   Receiver reads outdated data. A fix could be a mailbox to buffer the data.
    
-2. **Event Driven Control Task**
+   1.2 **Sender and Receiver same Prio or Sender has higher Prio:**
+
+   Race Condition. (Overwrite of Signals) A fix could be an Eventqueue.
+   
+3. **Event Driven Control Task**
 
    2.1. **Receiver has higher Priority than Sender:** This Configuration works in this szenario. Even if the input runnables would be not both in one task, there would be no races.
    2.2 **Sender and Receiver same Prio or Sender has higher Prio:** Button Signal would overwrite joystick signal always.
