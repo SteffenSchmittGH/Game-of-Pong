@@ -35,15 +35,30 @@ Futhermore the HMI display is not a Realtime application. So here it could make 
 **Priorities** (Design not yet finished)
 
 Implemented are 3 different Tasks. The questions for the priority can be solved with the following considerations:
+**Cyclic Control Task**
+
 1. **Receiver has higher Priority than Sender:** Receiver reads outdated data. A fix could be a mailbox to buffer the data.
 2. **Sender and Receiver same Prio or Sender has higher Prio:** Race Condition. (Overwrite of Signals) A fix could be an Eventqueue.
    
+**Event Driven Control Task**
+
+1. **Receiver has higher Priority than Sender:** This Configuration works in this szenario. Even if the input runnables would be not both in one task, there would be no races.
+2. **Sender and Receiver same Prio or Sender has higher Prio:** Button Signal would overwrite joystick signal always.
+
 **Mailbox**
 
 The mailbox works as a ringbuffer which holds variable datatypes, typedef structs included. With this it is possible to have no race conditions.
 Attention has to be payed to the fillLevel and the PUT and GET functions of the Mailbox. Here Mutexes are used to make the Buffer threadsafe.
+The benefits of the Mailbox is the flexibility for futher extensions. Priority decisions are not fixed and will impact the correct behaviour of the system.
 
-## Statemachine
+**Conclusion**
+
+1. One cyclic input task for both button and joystick runnable. Eventsignal is output signal for both runnables. 
+2. Control task listens onDataUpdate of Eventsignal. No Events lost, since execution of Statemachine is faster than 10ms.
+3. Mailbox between input and control task, in case of extension of the input. Maybe another input task is added in future.
+4. No Mailbox needed between control task and output task. Three different signalobjects would do the job.
+
+## Statemachine (needs to be redesigned: one menue for all the games)
 ![pong_statemachine](https://github.com/user-attachments/assets/be111dd6-a01f-4e09-9e00-ab2f5efd9f30)
 
 The Task of the Statemachine is to receive input Events and considering the current state, configure the objects, defined in pong_game.h.
