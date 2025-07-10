@@ -56,7 +56,7 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 1. One cyclic input task for both button and joystick runnable. Eventsignal is output signal for both runnables. 
 2. Control task listens onDataUpdate of Eventsignal. No Events lost, since execution of Statemachine is faster than 10ms.
 3. Mailbox between input and control task, in case of extension of the input. Maybe another input task is added in future.
-4. No Mailbox needed between control task and output task. Three different signalobjects would do the job.
+4. **No Mailbox needed between control task and output task. Three different signalobjects would do the job.**
 
 ## Statemachine (needs to be redesigned: one menue for all the games)
 ![pong_statemachine](https://github.com/user-attachments/assets/be111dd6-a01f-4e09-9e00-ab2f5efd9f30)
