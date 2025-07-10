@@ -23,30 +23,30 @@ In Order to prevent Race Conditions and Data Loss (regarding the Signals), the s
 Game/System into a single Task. With this approach there are no Data Races (e.g. Statemachine reads while Joystick is writing).
 Since Sender and Receiver Runnables are executed sequentially, the implementation can be safe, when designed carefully.
 
-**Event Extension**
+#### Event Extension
 
 Since it could be possible to add some events like a information via UART, which game to play, the input task could be seperate from the 
 Control task. 
 
-**Realtime Tasks**
+#### Realtime Tasks
 
 Futhermore the HMI display is not a Realtime application. So here it could make sense to put higher priority on the Input Task and the Control task(Statemachine).
 
-**Priorities** (Design not yet finished)
+#### Priorities (Design not yet finished)
 
 Implemented are 3 different Tasks. The questions for the priority can be solved with the following considerations:
 
-### Cyclic Control Task
+**Cyclic Control Task**
 
 1. **Receiver has higher Priority than Sender:** Receiver reads outdated data. A fix could be a mailbox to buffer the data.
 2. **Sender and Receiver same Prio or Sender has higher Prio:** Race Condition. (Overwrite of Signals) A fix could be an Eventqueue.
    
-### Event Driven Control Task
+**Event Driven Control Task**
 
 1. **Receiver has higher Priority than Sender:** This Configuration works in this szenario. Even if the input runnables would be not both in one task, there would be no races.
 2. **Sender and Receiver same Prio or Sender has higher Prio:** Button Signal would overwrite joystick signal always.
 
-**Mailbox**
+#### Mailbox
 
 The mailbox works as a ringbuffer which holds variable datatypes, typedef structs included. With this it is possible to have no race conditions.
 Attention has to be payed to the fillLevel and the PUT and GET functions of the Mailbox. Here Mutexes are used to make the Buffer threadsafe.
