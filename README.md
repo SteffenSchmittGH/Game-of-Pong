@@ -7,7 +7,8 @@ This implementation has the benefits in ...
 
 ## RTE Design
 
-![rte_design](https://github.com/user-attachments/assets/b52d2bf2-cfad-4071-b22a-b264809ac010)
+<img width="1017" height="697" alt="grafik" src="https://github.com/user-attachments/assets/bb499764-fe2a-4bbd-88bb-4c556067f5eb" />
+
 
 ### General ###
 The input task, executes the runnables joystick and button. Those use the joystick driver and button driver respectively.
