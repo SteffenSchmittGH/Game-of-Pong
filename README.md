@@ -74,7 +74,8 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 
 ![pong_statemachine](https://github.com/user-attachments/assets/be111dd6-a01f-4e09-9e00-ab2f5efd9f30)
 
-The Task of the Statemachine is to receive input Events and considering the current state, configure the objects, defined in pong_game.h.
+The Task of the Statemachine is to receive input Events and considering the current state, configure the Signalobjects, read out by the hmi runnable.
+
 
 ## UML
 
