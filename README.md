@@ -90,7 +90,7 @@ The Task of the Statemachine is to receive input Events and considering the curr
 
 The transition order is **State Exit** -> **Transition Action** -> **State Entry**.
 
-**Deeper View into Statemachine implementation Strategies:**
+## Deeper View into Statemachine implementation Strategies:
 
 **Switch Case:**
 
