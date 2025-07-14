@@ -206,4 +206,5 @@ Summary: The finite statemachines are implemented like objects in C. There are m
 
 Challenges: 
    1. No inheritance in C: If two active objects have slightly different properties, a config struct has to be implemented, in order to distinguish between the objects. Each FSM instance receives a pointer to it's config. So logic remains same but acts slightly different. A better approach in this case (Pong) would have been to implement a config struct instead of putting all the data into the Signal Objects.
+
    2. 
