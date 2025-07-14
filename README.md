@@ -79,10 +79,4 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 The Task of the Statemachine is to receive input Events and considering the current state, configure the Signalobjects, read out by the hmi runnable.
 
 
-## UML
-
-![pong_uml](https://github.com/user-attachments/assets/2e3ad71d-5371-46c0-bd21-b503443f52a4)
-
-This UML describes the Datastructure of the Pong Objects in pong_games.h. This object is read by the HMI output task, which updates the tft display.
-
 
