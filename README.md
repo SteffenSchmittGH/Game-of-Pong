@@ -89,6 +89,7 @@ The Task of the Statemachine is to receive input Events and considering the curr
 | Guard   | A condition that must be true for a transition to occur            |
 
 The transition order is **State Exit** -> **Transition Action** -> **State Entry**.
+
 **Implementation Strategies:**
 
 **Switch Case:**
@@ -104,8 +105,60 @@ The drawbacks are:
 
 **Full Transition Table:**
 
+Structure:
 
+typedef struct {
+  STATE_State_t fromState;
+  STATE_State_t toState;
+  STATE_Event_t event;
+  STATE_GuardPtr_t guard;
+  STATE_ActionPtr_t action;
+} STATE_stateTransition_t;
 
+An table of the type STATE_stateTransition_t describes the whole Statemachine. Here the full table needs to be implemented. A function processEvent will parse the table, check if the incoming event fits the table, checks for guards and actions. This function also updates the current state of the statemachine. A global variable STATE_State_t currentState should save the state.
+
+Benefits of the Full Transition Table method:
+   1. Good readability
+   2. Flexible (any number of actions, guards)
+      
+Drawbacks:
+   1. Slow, since every event scans the entire table
+   2. Bad memory footprint if many transitions
+
+**Design Concept 2: Explicit Transition Table**
+
+Similar to full Transition Table but instead of parsing the whole table, an index is calculated (state * event) to access the transition. Since the index calculation relies of the whole implementation of the state/event combinations, the full transition table needs to be stored.
+
+Benefits of the Explicit Transition Table method:
+   1. Fast Lookup
+   2. Good for many transitions
+      
+Drawbacks:
+   1. Limited to one guard/action per transition
+   2. Waste space for unused transitions
+
+**Design Concept 3: Two-Layer Transition Table**
+
+Each state has its own transition list. (inner tables)
+An outer table maps states to their transition sets.
+
+Example: Game of Pong (statemachine.h)
+
+const STATE_outerTransition_Container_t GAMES_Container_Transitions [] = { 
+/*      FROM STATE         INNER TABLE          SIZE  (inner)*/    
+};
+
+const STATE_innerTransition_Container_t STATE_GAMES_PONG_Transitions[] = { 
+/*    EVENT      TO_STATE    GUARD    TRANSITIONACTION */
+};
+
+const STATE_innerTransition_Container_t STATE_GAMES_MENUE_Transitions[] = { 
+/*    EVENT      TO_STATE    GUARD    TRANSITIONACTION */
+};
+            TRANSITIONACTION*/
+const STATE_innerTransition_Container_t STATE_GAMES_PAUSE_Transitions[] = { 
+/*    EVENT      TO_STATE    GUARD    TRANSITIONACTION */
+};
 
 
 
