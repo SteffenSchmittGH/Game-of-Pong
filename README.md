@@ -69,7 +69,7 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 1. One cyclic input task for both button and joystick runnable. Eventsignal is output signal for both runnables. 
 2. Control task listens onDataUpdate of Eventsignal. No Events lost, since execution of Statemachine is faster than 10ms.
 3. Mailbox between input and control task, in case of extension of the input. Maybe another input task is added in future.
-4. **No Mailbox needed between control task and output task. Three different signalobjects would do the job.**
+4. **No Mailbox needed between control task and output task. Two different signalobjects would do the job.**
 
 ## Statemachine (needs to be redesigned: one menue for all the games)
 
@@ -90,7 +90,7 @@ The Task of the Statemachine is to receive input Events and considering the curr
 
 The transition order is **State Exit** -> **Transition Action** -> **State Entry**.
 
-**Implementation Strategies:**
+**Deeper View into Statemachine implementation Strategies:**
 
 **Switch Case:**
 
@@ -137,28 +137,73 @@ Drawbacks:
    1. Limited to one guard/action per transition
    2. Waste space for unused transitions
 
-**Design Concept 3: Two-Layer Transition Table**
+**Design Concept 3: Two-Layer Transition Table (Used)**
 
 Each state has its own transition list. (inner tables)
-An outer table maps states to their transition sets.
+An outer table maps states to their transition sets. 
+The outer Table is small, so an iteration through the whole table is sensible.
 
 Example: Game of Pong (statemachine.h)
 
 const STATE_outerTransition_Container_t GAMES_Container_Transitions [] = { 
+
 /*      FROM STATE         INNER TABLE          SIZE  (inner)*/    
+
 };
 
 const STATE_innerTransition_Container_t STATE_GAMES_PONG_Transitions[] = { 
+
 /*    EVENT      TO_STATE    GUARD    TRANSITIONACTION */
+
 };
 
 const STATE_innerTransition_Container_t STATE_GAMES_MENUE_Transitions[] = { 
+
 /*    EVENT      TO_STATE    GUARD    TRANSITIONACTION */
+
 };
             TRANSITIONACTION*/
 const STATE_innerTransition_Container_t STATE_GAMES_PAUSE_Transitions[] = { 
+
 /*    EVENT      TO_STATE    GUARD    TRANSITIONACTION */
+
 };
 
+Benefits: 
+   1. Good performance
+   2. Very flexible and scalable
+   3. Best memory efficiency
+
+Drawbacks:
+   1. More complex implementation
 
 
+**Statemachines Design Improvements**
+
+Instead of introducing extra flags like "pong_isSet", consider to represent it as a new state in the statemachine. In most cases, if the flag alters how the system behaves, it should be a state. 
+
+Instead of using a global bitmask, use enum events. A bitmask, makes it possible to store many events in a single variable. This is a compact way of implementing, since it fastens the set and clear. It also enables combining events for multiple sources. (e.g., SetEvent(ev_button1 | ev_timeout).
+But the processing can be more complex, since it has to be identified which is tha active bit.
+
+**Hirarchical State Machines(Used)**
+
+Always try to flatten hierachical state machines into simple flat statemachines.
+
+Active Object:
+
+An object with its own statemachine, responding to events. Multiple instances share FSM logic but hold private state. FSM state is not modified externally only via events.
+
+Divide and Conquer:
+
+1. Break down complex FSM into smaller, independent FSMs
+2. Each widget becomes and active object
+3. The container coordinates them and handles shared actions
+
+
+**Challenges in Active Object FSM Design**
+
+Summary: The finite statemachines are implemented like objects in C. There are multiple instances of those "Classes". Each instance has it's own state and configuration. Events are dispatched to these FSM's independently.
+
+Challenges: 
+   1. No inheritance in C: If two active objects have slightly different properties, a config struct has to be implemented, in order to distinguish between the objects. Each FSM instance receives a pointer to it's config. So logic remains same but acts slightly different. A better approach in this case (Pong) would have been to implement a config struct instead of putting all the data into the Signal Objects.
+   2. 
