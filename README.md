@@ -72,7 +72,8 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 
 ## Statemachine (needs to be redesigned: one menue for all the games)
 
-![pong_statemachine](https://github.com/user-attachments/assets/be111dd6-a01f-4e09-9e00-ab2f5efd9f30)
+<img width="830" height="612" alt="grafik" src="https://github.com/user-attachments/assets/2c54cbd7-d191-4327-a2d6-e1ba19c42c66" />
+
 
 The Task of the Statemachine is to receive input Events and considering the current state, configure the Signalobjects, read out by the hmi runnable.
 
