@@ -75,8 +75,37 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 
 <img width="830" height="612" alt="grafik" src="https://github.com/user-attachments/assets/2c54cbd7-d191-4327-a2d6-e1ba19c42c66" />
 
+**Brief**
 
 The Task of the Statemachine is to receive input Events and considering the current state, configure the Signalobjects, read out by the hmi runnable.
+
+**Core Concepts**
+
+| Concept | Description   |
+| --------| ------------------------------------------------------------------ |
+| State   | A condition the system can be in (e.g., Stopped, Playing)          |
+| Event   | External or internal input triggering change (e.g., button press)  |
+| Action  | What the system does during a transition (e.g., play song)         |
+| Guard   | A condition that must be true for a transition to occur            |
+
+The transition order is **State Exit** -> **Transition Action** -> **State Entry**.
+**Implementation Strategies:**
+
+**Switch Case:**
+
+The easiest implementation strategy is the switch case pattern. Here each "case" stands for an state. The "if" and "else if" checks the events. Actions are called during transition and "state" is updated during transition. 
+
+The benefits here are:
+   1. simple to debug
+   2. fast and flexible
+   3. good for flat and small statemachines
+The drawbacks are:
+   1. Becomes hard to maintain as project growes
+
+**Full Transition Table:**
+
+
+
 
 
 
