@@ -76,7 +76,7 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 
 4. **No Mailbox needed between control task and output task. Three different signalobjects would do the job.**
 
-## Statemachine (needs to be redesigned: one menue for all the games)
+## Statemachine 
 
 <img width="830" height="612" alt="grafik" src="https://github.com/user-attachments/assets/2c54cbd7-d191-4327-a2d6-e1ba19c42c66" />
 
@@ -95,7 +95,7 @@ The Task of the Statemachine is to receive input Events and considering the curr
 
 The transition order is **State Exit** -> **Transition Action** -> **State Entry**.
 
-## Deeper View into Statemachine implementation Strategies:
+# Deeper View into Statemachine implementation Strategies:
 
 **Switch Case:**
 
