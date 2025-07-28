@@ -15,13 +15,6 @@
 #include "mailbox.h"
 #include "tft.h"
 
-
-/*
-Regarding ErrorHandling: 
-    First Step should be Return Codes.
-    Second Step could be AGE.
-    What about Central Error Handler.
-*/
 //ISR which will increment the systick counter every ms
 ISR(systick_handler)
 {
