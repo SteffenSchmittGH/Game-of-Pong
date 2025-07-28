@@ -210,10 +210,57 @@ Divide and Conquer:
 
 
 **Challenges in Active Object FSM Design**
+## Active Objects, State Machines & Dispatcher
 
-Summary: The finite statemachines are implemented like objects in C. There are multiple instances of those "Classes". Each instance has it's own state and configuration. Events are dispatched to these FSM's independently.
+### Key Concepts
 
-Challenges: 
-   1. No inheritance in C: If two active objects have slightly different properties, a config struct has to be implemented, in order to distinguish between the objects. Each FSM instance receives a pointer to it's config. So logic remains same but acts slightly different. A better approach in this case (Pong) would have been to implement a config struct instead of putting all the data into the Signal Objects.
+- **Dispatcher** is only required when **active objects depend on each other**.
+- **Active objects** examples:
+  - `PONG` App: `PONG`, `SNAKE`, `SOKKER`
+  - `CLOCK` App: `Hours`, `Minutes`
+- An **active object** is an object (e.g., `Game Pong`) composed with a state machine (via composition, aggregation, or association).
+- In the `CLOCK` app, `Hours` and `Minutes` both need to react to certain events. For transitions like:
+  - `C_EDITHOURS → Display`
+  - `C_EDITMINUTES → Edit`
+  
+  a **dispatcher is not needed**. A shared/global object is better suited.
+- **Choosing between Dispatcher and Guard Variable**:
+  -  Guard Variable: Easy to implement
+  -  Dispatcher: Fewer shared variables, better for avoiding race conditions
+
+---
+
+### Design Challenges
+
+#### Challenge 1: Inheritance to State Machine
+```text
+Active objects require a connection to a state machine.
+Solution: Use a pointer or configuration reference to the state machine.
+```
+
+#### Challenge 2: Shared Logic Between Active Objects
+```text
+Centralized logic improves cohesion but breaks encapsulation.
+Better Solution: Separate state machine and clock data classes.
+```
+
+#### Challenge 3: Custom Events & Ringbuffer Issues
+```text
+Using a single event like `onDataUpdate` simplifies the interface but can introduce race conditions.
+
+Problem: RTE uses set/get methods for ringbuffers → risk of data overwrite
+Solution 1: Use pointers (but may conflict with MPU)
+Solution 2: Move buffering into RTE (uses more memory and increases complexity)
+```
+
+#### Challenge 4: State as Signal
+```text
+Signals are protected global objects that support MPU.
+
+Pro: Consistent signal type for global objects
+Con: Signals only support get/set, not ProcessEvent API
+```
+
+
 
 ...
