@@ -46,53 +46,54 @@
 void PONG_joy_run(RTE_event ev){
 	
 	/* USER CODE START PONG_joy_run */
-    //UART_LOG_PutString("joy!\r\n");
+    //get data from the joystick driver ans store data into SO_JOYSTICK_signal
     RTE_SC_JOYSTICK_pullPort(&SO_JOYSTICK_signal);
+	
     SC_JOYSTICK_data_t joystick_datas;
+    //create a local copy of that data.(copy it out of global object)
     joystick_datas = RTE_SC_JOYSTICK_get(&SO_JOYSTICK_signal);
+
+    //format the joystick data into the range of -2000 and +2000
     sint16_t formatted_joystick_data;
     formatted_joystick_data = joystick_datas.joystick_vertical - JOYSTICK_VERTICAL_OFFSET;
+
+    //event signal should be evaluated regarding joystick signal and feed the statemachine
     SC_EVENT_data_t event_signal;
     event_signal.event_statemachine = EV_SO_JOY_NO;
     SC_EVENT_data_t trigger_statemachine;
-    // in order to fire no joysick signal event just once
+    //in order to fire no joysick signal event just once
     static boolean_t nosignal_first = TRUE;
-    //can be improved by biased multiplex
+	
+    //biased multiplex
     if(formatted_joystick_data > 1800)
     {
-        //UART_LOG_PutString("up_highspeed\r\n");
         event_signal.event_statemachine = EV_SO_JOY_UP;
     }
     else if(formatted_joystick_data > 1000)
     {
-        //UART_LOG_PutString("up_medspeed\r\n");
         event_signal.event_statemachine = EV_SO_JOY_UP;
     }
     else if(formatted_joystick_data > 200)
     {
-        //UART_LOG_PutString("up_lowhspeed\r\n");
         event_signal.event_statemachine = EV_SO_JOY_UP;
     }
     else if(formatted_joystick_data < -1800)
     {
-        //UART_LOG_PutString("down_highspeed\r\n");
         event_signal.event_statemachine = EV_SO_JOY_DOWN;
     }
     else if(formatted_joystick_data < -1000)
     {
-        //UART_LOG_PutString("down_medspeed\r\n");
         event_signal.event_statemachine = EV_SO_JOY_DOWN;
     }
     else if(formatted_joystick_data < -20)
     {
-        //UART_LOG_PutString("down_lowspeed\r\n");
         event_signal.event_statemachine = EV_SO_JOY_DOWN;
     }
     else if(formatted_joystick_data < 200)
     {
-        //UART_LOG_PutString("NO MOVE\r\n");
         event_signal.event_statemachine = EV_SO_JOY_NO;
     }
+	
     //If event occoured, write it to message buffer and fire event via onDataUpdate
     if(event_signal.event_statemachine != EV_SO_JOY_NO)
     {
@@ -108,7 +109,7 @@ void PONG_joy_run(RTE_event ev){
         nosignal_first = FALSE;
         //UART_LOG_PutString("EV_JOY_NONE\r\n");
     }
-    //UART_LOG_PutString("joystick runnable\r\n");
+
     #if DEBUG_JOYSTICK_RUNNABLE
         char buf[10];
         itoa(formatted_joystick_data,buf,10);
@@ -122,7 +123,7 @@ void PONG_joy_run(RTE_event ev){
 /*
 * component: swc_pong
 * cycletime: 10
-* description: Runnable
+* description: Reads out the Button datas and creates an event signal which is provided to the statemachine
 * events: ev_input_10ms
 * name: PONG_button_run
 * shortname: button
@@ -132,14 +133,15 @@ void PONG_joy_run(RTE_event ev){
 */
 void PONG_button_run(RTE_event ev){
 	
-	/* USER CODE START PONG_button_run */
+	/* USER CODE START PONG_button_run */#
+   // get the button datas from the button driver and prepare the event signals
     RTE_SC_BUTTON_pullPort(&SO_BUTTONS_signal);
     SC_BUTTON_data_t button_datas;
     button_datas = RTE_SC_BUTTON_get(&SO_BUTTONS_signal);
     SC_EVENT_data_t event_datas;
     event_datas.event_statemachine = EV_STATE_NONE;
     SC_EVENT_data_t update_trigger;
-    //UART_LOG_PutString("button!\r\n");
+    //regarding button datas, fill the event signal
     if(button_datas.previous_and_current_b1[button_datas.index_b2] == 1 && button_datas.previous_and_current_b1[!button_datas.index_b2] == 0)//falling edge
     {
         #if ENABLE_LONG_PRESS_DETECTION
@@ -153,8 +155,7 @@ void PONG_button_run(RTE_event ev){
             event_datas.event_statemachine = EV_SO_B1LP;
             UART_LOG_PutString("EV_KR\r\n");
         }
-        #else  
-           //UART_LOG_PutString("B1\r\n"); 
+        #else 
            event_datas.event_statemachine = EV_SO_B1;    
         #endif
     }
@@ -172,7 +173,6 @@ void PONG_button_run(RTE_event ev){
             UART_LOG_PutString("EV_KR\r\n");
         }
         #else
-            //UART_LOG_PutString("B2\r\n"); 
             event_datas.event_statemachine = EV_SO_B2;
         #endif
     }
@@ -190,7 +190,6 @@ void PONG_button_run(RTE_event ev){
             UART_LOG_PutString("EV_KR\r\n");
         }
         #else   
-            //UART_LOG_PutString("B3\r\n"); 
             event_datas.event_statemachine = EV_SO_B3;
         #endif
     }
@@ -200,18 +199,16 @@ void PONG_button_run(RTE_event ev){
         if(button_datas.timer > 40)
         {
             event_datas.event_statemachine = EV_SO_B4;
-            UART_LOG_PutString("EV_KRLP\r\n"); 
         }
         if(button_datas.timer <= 20)
         {
             event_datas.event_statemachine = EV_SO_B4LP;
-            UART_LOG_PutString("EV_KR\r\n");
         }
         #else
-            //UART_LOG_PutString("B4\r\n"); 
             event_datas.event_statemachine = EV_SO_B4;
         #endif
     }
+    // add the event into the eventqueue, which will be read out from the statemachine runnable
     if(event_datas.event_statemachine != EV_STATE_NONE)
     {
         MESSAGEBOX_PUT(&event_queue, (void*)&event_datas,MB_TYPE_EVENTSIGNAL, sizeof(event_datas) + 1);
@@ -234,46 +231,39 @@ void PONG_button_run(RTE_event ev){
 void PONG_control_run(RTE_event ev){
 	
 	/* USER CODE START PONG_control_run */
-    //UART_LOG_PutString("control\r\n");
+    //read out event queue and push it to statemachine
     SC_EVENT_data_t local_event_data;
     MESSAGEBOX_GET(&event_queue, &local_event_data, event_queue.messagebox_buffer->buffer_size);
     if(local_event_data.event_statemachine == EV_SO_B1)
     {
         processEvent_Container(&sm_container_active,EV_B1);
-        //UART_LOG_PutString("MESSAGEBOX_WORKS_B1\r\n");
     }
     else if(local_event_data.event_statemachine == EV_SO_B2)
     {
         processEvent_Container(&sm_container_active,EV_B2);
-        //UART_LOG_PutString("MESSAGEBOX_WORKS_B2\r\n");
     }
     else if(local_event_data.event_statemachine == EV_SO_B3)
     {
         processEvent_Container(&sm_container_active,EV_B3);
-        //UART_LOG_PutString("MESSAGEBOX_WORKS_B3\r\n");
     }
     else if(local_event_data.event_statemachine == EV_SO_B4)
     {
         processEvent_Container(&sm_container_active,EV_B4);
-        //UART_LOG_PutString("MESSAGEBOX_WORKS_B4\r\n");
     }
     else if(local_event_data.event_statemachine == EV_SO_JOY_DOWN)
     {
         processEvent_Container(&sm_container_active,EV_JOY_DOWN);
-        //UART_LOG_PutString("MESSAGEBOX_WORKS_DOWN\r\n");
     }
     else if(local_event_data.event_statemachine == EV_SO_JOY_UP)
     {
         processEvent_Container(&sm_container_active,EV_JOY_UP);
-        //UART_LOG_PutString("MESSAGEBOX_WORKS_JOYUP\r\n");
     }else if(local_event_data.event_statemachine == EV_SO_JOY_NO)
     {
         processEvent_Container(&sm_container_active,EV_JOY_NONE);
-        //UART_LOG_PutString("MESSAGEBOX_WORKS_JOYUP\r\n");
     }
     else
     {
-        UART_LOG_PutString("else control\r\n");
+        UART_LOG_PutString("else in control\r\n");
     }
     
     /* USER CODE END PONG_control_run */
@@ -293,12 +283,13 @@ void PONG_control_run(RTE_event ev){
 void PONG_hmi_run(RTE_event ev){
 	
 	/* USER CODE START PONG_hmi_run */
-    //UART_LOG_PutString("hmi runnable\r\n");
+    //get pong datas and menue datas
     GAMES_SCREEN_TYPES_t  type;
     SC_PONG_data_t game_data = RTE_SC_PONG_get(&SO_GAME_signal);
     SC_MENUE_data_t menue_data = RTE_SC_MENUE_get(&SO_MENUE_signal);
     type = menue_data.games_current;
     SC_HMI_data_t hmi_data;
+    //set hmi display regarding pong datas
     switch (type) {
         case GAMES_SCREEN_PONG: {
             
@@ -343,6 +334,7 @@ void PONG_hmi_run(RTE_event ev){
            // UART_LOG_PutString("update tft else\r\n");
             break;
     }
+    //reset hmi datas to init states
     RTE_SC_MENUE_set(&SO_MENUE_signal, menue_data);
     hmi_data.update_game = FALSE;
     hmi_data.update_menue = FALSE;
