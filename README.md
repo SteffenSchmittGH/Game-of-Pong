@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Game-of-Pong (in Progress)
 =======
 # Game-of-Pong 
