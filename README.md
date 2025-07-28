@@ -132,7 +132,7 @@ Drawbacks:
    1. Slow, since every event scans the entire table
    2. Bad memory footprint if many transitions
 
-**Design Concept 2: Explicit Transition Table**
+**Explicit Transition Table**
 
 Similar to full Transition Table but instead of parsing the whole table, an index is calculated (state * event) to access the transition. Since the index calculation relies of the whole implementation of the state/event combinations, the full transition table needs to be stored.
 
@@ -144,7 +144,7 @@ Drawbacks:
    1. Limited to one guard/action per transition
    2. Waste space for unused transitions
 
-**Design Concept 3: Two-Layer Transition Table (Used)**
+**Two-Layer Transition Table (Used)**
 
 Each state has its own transition list. (inner tables)
 An outer table maps states to their transition sets. 
