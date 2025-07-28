@@ -112,13 +112,13 @@ The drawbacks are:
 
 Structure:
 
-‘‘‘typedef struct {
+```typedef struct {
   STATE_State_t fromState;
   STATE_State_t toState;
   STATE_Event_t event;
   STATE_GuardPtr_t guard;
   STATE_ActionPtr_t action;
-} STATE_stateTransition_t;‘‘‘
+} STATE_stateTransition_t;```
 
 An table of the type STATE_stateTransition_t describes the whole Statemachine. Here the full table needs to be implemented. A function processEvent will parse the table, check if the incoming event fits the table, checks for guards and actions. This function also updates the current state of the statemachine. A global variable STATE_State_t currentState should save the state.
 
@@ -150,13 +150,13 @@ The outer Table is small, so an iteration through the whole table is sensible.
 
 Example: Game of Pong (statemachine.h)
 
-‘‘‘
+```
 const STATE_outerTransition_Container_t GAMES_Container_Transitions [] = { 
 
 /*      FROM STATE         INNER TABLE          SIZE  (inner)*/    
 
 };
-‘‘‘
+```
 
 const STATE_innerTransition_Container_t STATE_GAMES_PONG_Transitions[] = { 
 
