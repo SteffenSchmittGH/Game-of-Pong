@@ -158,7 +158,7 @@ const STATE_outerTransition_Container_t GAMES_Container_Transitions [] = {
 /*      FROM STATE         INNER TABLE          SIZE  (inner)*/    
 
 };
-```
+
 
 const STATE_innerTransition_Container_t STATE_GAMES_PONG_Transitions[] = { 
 
@@ -177,7 +177,7 @@ const STATE_innerTransition_Container_t STATE_GAMES_PAUSE_Transitions[] = {
 /*    EVENT      TO_STATE    GUARD    TRANSITIONACTION */
 
 };
-
+```
 Benefits: 
    1. Good performance
    2. Very flexible and scalable
