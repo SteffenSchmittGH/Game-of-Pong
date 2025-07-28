@@ -1,7 +1,7 @@
 # Game-of-Pong (in Progress)
-=======
+
 # Game-of-Pong 
->>>>>>> 46311e7dd8d6913545ae0d000f5518a802fa8513
+
 Embedded OS and RTE based implementation of the Game of Pong on an Embedded Target (Psoc).
 This implementation has the benefits in ...
 1. **Decoupling**: Application logic and Driver logic is seperated. Statemachine doesnt directly access display Hardware.
