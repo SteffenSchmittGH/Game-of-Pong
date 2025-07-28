@@ -246,16 +246,17 @@ Better Solution: Separate state machine and clock data classes.
 
 #### Challenge 3: Custom Events & Ringbuffer Issues
 ```text
-Using a single event like `onDataUpdate` simplifies the interface but can introduce race conditions.
+Using a single event like "onDataUpdate" simplifies the interface but can introduce race conditions.
 
-Problem: RTE uses set/get methods for ringbuffers → risk of data overwrite
+Ringbuffer as a signal ?
+Problem: RTE just supports get/set -> need to copy whole ringbuffer -> risk of data overwrite
 Solution 1: Use pointers (but may conflict with MPU)
 Solution 2: Move buffering into RTE (uses more memory and increases complexity)
 ```
 
 #### Challenge 4: State as Signal
 ```text
-Signals are protected global objects that support MPU.
+Signals are protected global objects that support MPU. So why not use them as active Objects ?
 
 Pro: Consistent signal type for global objects
 Con: Signals only support get/set, not ProcessEvent API
