@@ -78,22 +78,6 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 
 ## Statemachine (needs to be redesigned: one menue for all the games)
 
-![pong_statemachine](https://github.com/user-attachments/assets/be111dd6-a01f-4e09-9e00-ab2f5efd9f30)
-
-The Task of the Statemachine is to receive input Events and considering the current state, configure the objects, defined in pong_game.h.
-
-## UML
-
-![pong_uml](https://github.com/user-attachments/assets/2e3ad71d-5371-46c0-bd21-b503443f52a4)
-
-This UML describes the Datastructure of the Pong Objects in pong_games.h. This object is read by the HMI output task, which updates the tft display.
-
-
-=======
-4. **No Mailbox needed between control task and output task. Two different signalobjects would do the job.**
-
-## Statemachine (needs to be redesigned: one menue for all the games)
-
 <img width="830" height="612" alt="grafik" src="https://github.com/user-attachments/assets/2c54cbd7-d191-4327-a2d6-e1ba19c42c66" />
 
 **Brief**
