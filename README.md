@@ -10,12 +10,12 @@ This implementation has the benefits in ...
 
 ## RTE Design
 
-<<<<<<< HEAD
+
 ![rte_design](https://github.com/user-attachments/assets/b52d2bf2-cfad-4071-b22a-b264809ac010)
 =======
 <img width="1017" height="697" alt="grafik" src="https://github.com/user-attachments/assets/bb499764-fe2a-4bbd-88bb-4c556067f5eb" />
 
->>>>>>> 46311e7dd8d6913545ae0d000f5518a802fa8513
+
 
 ### General ###
 The input task, executes the runnables joystick and button. Those use the joystick driver and button driver respectively.
@@ -76,7 +76,7 @@ The benefits of the Mailbox is the flexibility for futher extensions. Priority d
 1. One cyclic input task for both button and joystick runnable. Eventsignal is output signal for both runnables. 
 2. Control task listens onDataUpdate of Eventsignal. No Events lost, since execution of Statemachine is faster than 10ms.
 3. Mailbox between input and control task, in case of extension of the input. Maybe another input task is added in future.
-<<<<<<< HEAD
+
 4. **No Mailbox needed between control task and output task. Three different signalobjects would do the job.**
 
 ## Statemachine (needs to be redesigned: one menue for all the games)
