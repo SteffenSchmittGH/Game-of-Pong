@@ -51,7 +51,6 @@ ALARMCALLBACK(task_activation)
         //UART_LOG_PutString("hmi callback\r\n");
         SetEvent(tsk_hmi, ev_hmi_250ms);
     }
-    //UART_LOG_PutString("CALLBACK\r\n");
 }
 
 /********************************************************************************
@@ -79,7 +78,7 @@ TASK(tsk_init)
     EE_system_init();
 	
     //Start SysTick
-	//Must be done here, because otherwise the isr vector is not overwritten yet
+    //Must be done here, because otherwise the isr vector is not overwritten yet
     EE_systick_start();  
 	
     //Start the alarm with 100ms cycle time
