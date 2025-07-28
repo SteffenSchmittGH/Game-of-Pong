@@ -150,11 +150,13 @@ The outer Table is small, so an iteration through the whole table is sensible.
 
 Example: Game of Pong (statemachine.h)
 
+‘‘‘
 const STATE_outerTransition_Container_t GAMES_Container_Transitions [] = { 
 
 /*      FROM STATE         INNER TABLE          SIZE  (inner)*/    
 
 };
+‘‘‘
 
 const STATE_innerTransition_Container_t STATE_GAMES_PONG_Transitions[] = { 
 
