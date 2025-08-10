@@ -2,7 +2,7 @@
 
 # Game-of-Pong 
 
-Embedded OS and RTE based implementation of the Game of Pong on an Embedded Target (Psoc). The RTE is generated with an Code Generator, including signall classes .h files.
+Embedded OS and RTE based implementation of the Game of Pong on an Embedded Target (Psoc). The RTE is generated with an Code Generator, including signall classes files.
 
 This implementation has the benefits in:
 1. **Decoupling**: Application logic and Driver logic is seperated. Statemachine doesnt directly access display Hardware.
