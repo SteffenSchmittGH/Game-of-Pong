@@ -2,8 +2,8 @@
 
 # Game-of-Pong 
 
-Embedded OS and RTE based implementation of the Game of Pong on an Embedded Target (Psoc).
-This implementation has the benefits in ...
+Embedded OS and RTE based implementation of the Game of Pong on an Embedded Target (Psoc). The RTE is generated with an Code Generator.
+This implementation has the benefits in:
 1. **Decoupling**: Application logic and Driver logic is seperated. Statemachine doesnt directly access display Hardware.
 2. **Asynchronous Updates**: Display rendering doesn't block the FSM or the communication logic.
 3. **Modular Design**: It is easy to extend the Input Events, Statemachine logic or add/swap Hardware.
